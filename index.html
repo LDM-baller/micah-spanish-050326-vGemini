@@ -31,11 +31,11 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Wide Vignette - fixed clipping */
+        /* Wide Ellipse Vignette - Fixed Clipping */
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.98) 100%);
+            background: radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.98) 100%);
             pointer-events: none;
             z-index: 100;
         }
@@ -46,7 +46,7 @@
             pointer-events: none;
             z-index: 101;
             opacity: 0.1;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
         .cinzel-header { font-family: 'Cinzel Decorative', serif; }
@@ -81,7 +81,7 @@
             font-family: 'Cinzel', serif;
             letter-spacing: 2px;
             text-transform: uppercase;
-            padding: 12px 20px;
+            padding: 15px 25px;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 10px 30px rgba(0,0,0,1);
             position: relative;
@@ -109,7 +109,7 @@
         /* Dossier Style */
         .dossier-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 40px;
             width: 100%;
             max-width: 1400px;
@@ -142,24 +142,6 @@
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
         }
 
-        /* Interrogation Lamp Shadow */
-        .lamp-shadow {
-            position: absolute;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 200px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
-            animation: swingLamp 5s ease-in-out infinite;
-            transform-origin: top center;
-        }
-
-        @keyframes swingLamp {
-            0%, 100% { transform: translateX(-50%) rotate(3deg); }
-            50% { transform: translateX(-50%) rotate(-3deg); }
-        }
-
         .interrogation-input {
             background: rgba(0,0,0,0.98);
             border: none;
@@ -176,8 +158,8 @@
 
         @media (min-width: 768px) { .interrogation-input { font-size: 6rem; } }
 
-        .blur-intel { filter: blur(20px); transition: filter 0.6s ease; user-select: none; }
-        .blur-intel.revealed { filter: blur(0); }
+        .blur-intel { filter: blur(22px); transition: filter 0.6s ease; user-select: none; pointer-events: none; }
+        .revealed .blur-intel { filter: blur(0); }
 
         .correct-stamp {
             color: var(--blood);
@@ -220,7 +202,7 @@
             </svg>
         </div>
         <h1 class="text-6xl md:text-[10rem] cinzel-header gold-metal tracking-tighter mb-4 leading-none">EL PADRINO</h1>
-        <p class="text-[10px] md:text-sm tracking-[0.8em] md:tracking-[1.2em] uppercase opacity-40 typewriter">Intelligence Bureau — Pretérito Division</p>
+        <p class="text-[10px] md:text-sm tracking-[0.4em] md:tracking-[0.8em] uppercase opacity-40 typewriter">Intelligence Bureau — Pretérito Division</p>
     </header>
 
     <!-- VIEWS -->
@@ -229,19 +211,19 @@
             <button onclick="changeView('mode1')" class="btn-mafia min-h-[160px]">
                 <div class="flex flex-col">
                     <span class="text-xs opacity-40 mb-2 typewriter">Operation</span>
-                    <span class="text-3xl md:text-6xl">ESCUCHA</span>
+                    <span class="text-3xl md:text-6xl uppercase">Escucha</span>
                 </div>
             </button>
             <button onclick="changeView('mode2')" class="btn-mafia min-h-[160px]">
                 <div class="flex flex-col">
                     <span class="text-xs opacity-40 mb-2 typewriter">Interrogation</span>
-                    <span class="text-3xl md:text-6xl">VERBOS</span>
+                    <span class="text-3xl md:text-6xl uppercase">Verbos</span>
                 </div>
             </button>
         </div>
         
         <button onclick="changeView('mode3')" class="w-full py-10 md:py-16 border-2 border-dashed border-gold/20 text-gold text-xl md:text-4xl cinzel-sub hover:bg-gold/5 transition-all shadow-2xl bg-black/40 uppercase">
-            Access Classified Evidence (Conjugations)
+            Access Classified Evidence (Archives)
         </button>
 
         <!-- Settings Console -->
@@ -251,7 +233,7 @@
                 <div class="space-y-6 text-left">
                     <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Target Stream</label>
                     <select id="setting-mode1-filter" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter hover:border-gold" onchange="updateSettings()">
-                        <option value="story">El Escape Cubano (Core Story)</option>
+                        <option value="story">El Escape Cubano (Mission Core)</option>
                         <option value="mixed">Mixed Intelligence (Everything)</option>
                     </select>
                 </div>
@@ -267,7 +249,7 @@
                 <div class="space-y-6 text-left">
                     <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Intelligence Voice</label>
                     <select id="setting-voice" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter hover:border-gold" onchange="updateSettings()">
-                        <option value="PREMIUM_US">🇺🇸 Google US / Siri Enhanced</option>
+                        <option value="GOOGLE_US">🇺🇸 Google US / Premium Asset</option>
                     </select>
                 </div>
             </div>
@@ -289,9 +271,9 @@
                 <div id="mode1-en" class="text-2xl md:text-5xl typewriter gold-metal hidden opacity-0 transition-opacity duration-1000 bg-black/70 p-8 md:p-14 inline-block border-2 border-gold/10"></div>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-8 md:gap-16 w-full max-w-5xl mt-20 pb-32">
-            <button id="btn-reveal" onclick="revealMode1()" class="btn-mafia text-xl md:text-4xl">DECIPHER</button>
-            <button onclick="nextMode1()" class="btn-mafia text-xl md:text-4xl">CONTINUE</button>
+        <div class="grid grid-cols-2 gap-8 md:gap-16 w-full max-w-5xl mt-20 pb-32 px-4">
+            <button id="btn-reveal" onclick="revealMode1()" class="btn-mafia text-lg md:text-4xl">DECIPHER</button>
+            <button onclick="nextMode1()" class="btn-mafia text-lg md:text-4xl">CONTINUE</button>
         </div>
     </div>
 
@@ -303,24 +285,23 @@
         </div>
         <div class="w-full flex-1 flex flex-col items-center justify-center space-y-20 md:space-y-32">
             <div class="text-center relative w-full">
-                <div class="lamp-shadow"></div>
                 <span class="text-sm md:text-lg tracking-[1em] opacity-40 typewriter uppercase block mb-12">Restricted Asset Profile</span>
-                <h2 id="mode2-target" class="text-8xl md:text-[16rem] font-black gold-metal tracking-tighter leading-none"></h2>
+                <h2 id="mode2-target" class="text-8xl md:text-[14rem] font-black gold-metal tracking-tighter leading-none"></h2>
                 <p id="mode2-context" class="typewriter text-lg md:text-3xl italic opacity-30 mt-12 md:mt-24 px-10 md:px-48 leading-relaxed font-serif"></p>
             </div>
             <div class="w-full flex flex-col items-center space-y-12 md:space-y-20 px-8">
-                <input type="text" id="mode2-input" autocomplete="off" class="interrogation-input" placeholder="Speak Statement...">
-                <div id="mode2-feedback" class="h-20 md:h-32 flex items-center justify-center"></div>
+                <input type="text" id="mode2-input" autocomplete="off" class="interrogation-input" placeholder="State Statement...">
+                <div id="mode2-feedback" class="h-20 md:h-32 flex items-center justify-center font-black text-xl md:text-4xl uppercase typewriter"></div>
             </div>
         </div>
-        <button id="btn-submit-mode2" onclick="checkMode2()" class="w-full max-w-4xl py-10 md:py-16 btn-mafia text-3xl md:text-6xl font-black mt-20 mb-32">CONFIRM INTEL</button>
+        <button id="btn-submit-mode2" onclick="checkMode2()" class="w-full max-w-4xl py-10 md:py-16 btn-mafia text-2xl md:text-6xl font-black mt-20 mb-32">CONFIRM INTEL</button>
     </div>
 
     <!-- Mode 3: Archive -->
     <div id="view-mode3" class="view hidden w-full flex flex-col items-center px-8">
         <div class="w-full flex justify-between items-center mb-16 md:mb-24 max-w-7xl">
             <button onclick="changeView('home')" class="text-gold cinzel-sub text-2xl md:text-4xl hover:brightness-150 transition-all">← CLOSE ARCHIVES</button>
-            <span class="text-gold/30 text-xs md:text-lg tracking-[0.5em] uppercase font-black">Restricted Intel Dossier Access</span>
+            <span class="text-gold/30 text-[8px] md:text-sm tracking-[0.5em] uppercase font-black">Restricted Intel Dossier Access</span>
         </div>
         <div id="mode3-list" class="dossier-grid"></div>
         <div class="h-64"></div>
@@ -344,17 +325,17 @@
     </div>
 
     <footer class="mt-32 opacity-10 text-center pb-32 pointer-events-none w-full safe-pb">
-        <p class="typewriter text-[12px] md:text-[18px] uppercase tracking-[1em] md:tracking-[2em]">Proprietà della Famiglia Corleone — Micah</p>
+        <p class="typewriter text-[12px] md:text-[18px] uppercase tracking-[0.4em] md:tracking-[0.8em]">Proprietà della Famiglia Corleone — Micah</p>
     </footer>
 </div>
 
 <script>
-    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-fixed-v2';
+    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-fixed-v3';
 
     const VERB_DEFS = {
         "vivir": "to live", "agarrar": "to grab", "vomitar": "to vomit", "atacar": "to attack", "viajar": "to travel", 
         "comprar": "to buy", "llegar": "to arrive", "regresar": "to return", "ducharse": "to shower", 
-        "levantarse": "to get up", "moverse": "to move", "ser": "to be", "ir": "to go", "ver": "to see", 
+        "levantarse": "to get up", "moverse": "to move", "ser/ir": "to be / to go", "ver": "to see", 
         "hacer": "to make / do", "tener": "to have"
     };
 
@@ -368,6 +349,7 @@
         {es: "El chico vomitó después de la cena.", en: "The boy vomited after dinner.", story: false},
         {es: "El tiburón atacó la balsa.", en: "The shark attacked the raft.", story: true},
         {es: "La familia viajó en la balsa ilegal.", en: "The family traveled on the illegal raft.", story: true},
+        {es: "La familia compró un neumático.", en: "The family bought a tire.", story: true},
         {es: "Rita regresó a Cuba en el barco.", en: "Rita returned to Cuba on the boat.", story: true},
         {es: "La familia se levantó para escapar.", en: "The family got up to escape.", story: true},
         {es: "La balsa se movió en el agua.", en: "The raft moved in the water.", story: true},
@@ -376,16 +358,78 @@
         {es: "Miguel vio el tiburón en el agua.", en: "Miguel saw the shark in the water.", story: true}
     ];
 
+    // MASTER VERB POOL - ENSURING ALL 15 VERBS AND 5 PRONOUNS
     const MODE2_DATA = [
         {es: "viví", en: "I lived", alts: ["lived"]},
-        {es: "vivió", en: "he lived", alts: ["lived", "she lived", "you lived"]},
-        {es: "agarró", en: "he grabbed", alts: ["grabbed", "she grabbed"]},
-        {es: "vomitó", en: "he vomited", alts: ["vomited"]},
+        {es: "viviste", en: "you lived", alts: ["lived"]},
+        {es: "vivió", en: "he lived", alts: ["lived", "she lived", "it lived", "you lived"]},
+        {es: "vivimos", en: "we lived", alts: ["lived"]},
+        {es: "vivieron", en: "they lived", alts: ["lived", "you all lived"]},
+        {es: "agarré", en: "I grabbed", alts: ["grabbed", "grasped"]},
+        {es: "agarraste", en: "you grabbed", alts: ["grabbed", "grasped"]},
+        {es: "agarró", en: "he grabbed", alts: ["grabbed", "she grabbed", "it grabbed"]},
+        {es: "agarramos", en: "we grabbed", alts: ["grabbed"]},
+        {es: "agarraron", en: "they grabbed", alts: ["grabbed", "you all grabbed"]},
+        {es: "vomité", en: "I vomited", alts: ["vomited", "threw up"]},
+        {es: "vomitaste", en: "you vomited", alts: ["vomited"]},
+        {es: "vomitó", en: "he vomited", alts: ["vomited", "she vomited", "it vomited"]},
+        {es: "vomitamos", en: "we vomited", alts: ["vomited"]},
+        {es: "vomitaron", en: "they vomited", alts: ["vomited"]},
+        {es: "ataqué", en: "I attacked", alts: ["attacked"]},
+        {es: "atacaste", en: "you attacked", alts: ["attacked"]},
+        {es: "atacó", en: "he attacked", alts: ["attacked", "she attacked"]},
+        {es: "atacamos", en: "we attacked", alts: ["attacked"]},
+        {es: "atacaron", en: "they attacked", alts: ["attacked"]},
+        {es: "viajé", en: "I traveled", alts: ["traveled", "travelled"]},
+        {es: "viajaste", en: "you traveled", alts: ["traveled"]},
+        {es: "viajó", en: "he traveled", alts: ["traveled", "she traveled"]},
+        {es: "viajamos", en: "we traveled", alts: ["traveled"]},
+        {es: "viajaron", en: "they traveled", alts: ["traveled"]},
+        {es: "compré", en: "I bought", alts: ["bought"]},
+        {es: "compraste", en: "you bought", alts: ["bought"]},
+        {es: "compró", en: "he bought", alts: ["bought", "she bought"]},
+        {es: "compramos", en: "we bought", alts: ["bought"]},
+        {es: "compraron", en: "they bought", alts: ["bought"]},
         {es: "llegué", en: "I arrived", alts: ["arrived"]},
+        {es: "llegaste", en: "you arrived", alts: ["arrived"]},
+        {es: "llegó", en: "he arrived", alts: ["arrived", "she arrived", "it arrived"]},
+        {es: "llegamos", en: "we arrived", alts: ["arrived"]},
+        {es: "llegaron", en: "they arrived", alts: ["arrived"]},
+        {es: "me duché", en: "I showered", alts: ["showered", "I took a shower"]},
+        {es: "te duchaste", en: "you showered", alts: ["showered"]},
+        {es: "se duchó", en: "he showered", alts: ["showered", "she showered", "it showered"]},
+        {es: "nos duchamos", en: "we showered", alts: ["showered"]},
+        {es: "se ducharon", en: "they showered", alts: ["showered"]},
+        {es: "me levanté", en: "I got up", alts: ["got up"]},
+        {es: "te levantaste", en: "you got up", alts: ["got up"]},
+        {es: "se levantó", en: "he got up", alts: ["got up", "she got up", "it got up"]},
+        {es: "nos levantamos", en: "we got up", alts: ["got up"]},
+        {es: "se levantaron", en: "they got up", alts: ["got up"]},
+        {es: "me moví", en: "I moved", alts: ["moved"]},
+        {es: "te moviste", en: "you moved", alts: ["moved"]},
+        {es: "se movió", en: "he moved", alts: ["moved", "she moved", "it moved"]},
+        {es: "nos movimos", en: "we moved", alts: ["moved"]},
+        {es: "se movieron", en: "they moved", alts: ["moved"]},
         {es: "fui", en: "I was / I went", alts: ["was", "went"], context: "Yo fui un amigo. / Yo fui al parque."},
+        {es: "fuiste", en: "you were / you went", alts: ["were", "went"], context: "Tú fuiste mi mejor amigo. / Tú fuiste a Sicilia."},
         {es: "fue", en: "he was / he went", alts: ["was", "went", "she was", "it was"], context: "Él fue importante. / Él fue a Florida."},
-        {es: "hizo", en: "he made", alts: ["made", "did"]},
-        {es: "tuve", en: "I had", alts: ["had"]}
+        {es: "fuimos", en: "we were / we went", alts: ["were", "went"], context: "Nosotros fuimos amigos. / Nosotros fuimos a Cuba."},
+        {es: "fueron", en: "they were / they went", alts: ["were", "went"], context: "Ellos fueron felices. / Ellos fueron a Sicilia."},
+        {es: "vi", en: "I saw", alts: ["saw"]},
+        {es: "viste", en: "you saw", alts: ["saw"]},
+        {es: "vio", en: "he saw", alts: ["saw", "she saw", "it saw"]},
+        {es: "vimos", en: "we saw", alts: ["saw"]},
+        {es: "vieron", en: "they saw", alts: ["saw"]},
+        {es: "hice", en: "I made / I did", alts: ["made", "did"]},
+        {es: "hiciste", en: "you made", alts: ["made", "did"]},
+        {es: "hizo", en: "he made", alts: ["made", "did", "she made", "it made"]},
+        {es: "hicimos", en: "we made", alts: ["made", "did"]},
+        {es: "hicieron", en: "they made", alts: ["made", "did"]},
+        {es: "tuve", en: "I had", alts: ["had"]},
+        {es: "tuviste", en: "you had", alts: ["had"]},
+        {es: "tuvo", en: "he had", alts: ["had", "she had", "it had"]},
+        {es: "tuvimos", en: "we had", alts: ["had"]},
+        {es: "tuvieron", en: "they had", alts: ["had"]}
     ];
 
     const MODE3_DATA = {
@@ -425,14 +469,14 @@
         const populate = () => {
             state.voices = window.speechSynthesis.getVoices();
             const select = document.getElementById('setting-voice');
-            const targetNames = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica", "Jorge", "Juan", "Diego"];
+            const targetNames = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica", "Jorge", "Luciana"];
             const spanish = state.voices.filter(v => v.lang.toLowerCase().startsWith('es'));
             
-            // Hunt for "Neural" or "Enhanced" versions to fix robotic sound
-            let best = spanish.find(v => targetNames.some(t => v.name.includes(t)) && !v.name.includes("compact"));
+            // Prefer Neural/Enhanced versions first to avoid robotic sound
+            let best = spanish.find(v => targetNames.some(t => v.name.includes(t)) && !v.name.toLowerCase().includes("compact"));
             if (!best) best = spanish.find(v => targetNames.some(t => v.name.includes(t)));
 
-            select.innerHTML = best ? `<option value="PREMIUM_US">🇺🇸 Intelligence Asset (Priority)</option>` : '<option value="">System Default</option>';
+            select.innerHTML = best ? `<option value="PREMIUM_US">🇺🇸 Intellectual Asset (Premium)</option>` : '<option value="">System Default</option>';
             
             spanish.forEach(v => {
                 const opt = document.createElement('option');
@@ -472,6 +516,10 @@
         }
     }
 
+    function shuffle(array) {
+        return array.sort(() => Math.random() - 0.5);
+    }
+
     function speak(text) {
         const msg = new SpeechSynthesisUtterance(text);
         msg.lang = 'es-MX';
@@ -479,7 +527,7 @@
         const vs = state.settings.voiceName;
         if (vs === "PREMIUM_US" || !vs) {
             const targets = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica"];
-            const target = state.voices.find(v => targets.some(t => v.name.includes(t)) && !v.name.includes("compact")) || 
+            const target = state.voices.find(v => targets.some(t => v.name.includes(t)) && !v.name.toLowerCase().includes("compact")) || 
                            state.voices.find(v => targets.some(t => v.name.includes(t))) || 
                            state.voices.find(v => v.lang.startsWith('es'));
             if (target) msg.voice = target;
@@ -491,10 +539,11 @@
         window.speechSynthesis.speak(msg);
     }
 
+    // MODE 1
     function startMode1() {
         const f = state.settings.mode1Filter;
         let pool = f === 'story' ? MODE1_DATA.filter(d => d.story) : MODE1_DATA;
-        state.mode1.queue = pool.sort(() => Math.random() - 0.5).slice(0, 10);
+        state.mode1.queue = [...pool].sort(() => Math.random() - 0.5).slice(0, 10);
         state.mode1.index = 0;
         showMode1();
     }
@@ -504,8 +553,8 @@
         const enEl = document.getElementById('mode1-en');
         const esEl = document.getElementById('mode1-es');
         
-        // HARD RESET English Reveal
-        enEl.textContent = "";
+        // PHYSICAL WIPE to prevent premature reveal
+        enEl.innerHTML = "";
         enEl.classList.add('hidden');
         enEl.classList.add('opacity-0');
         
@@ -535,8 +584,9 @@
 
     function speakCurrentSentence() { speak(state.mode1.queue[state.mode1.index].es); }
 
+    // MODE 2
     function startMode2() {
-        state.mode2.queue = MODE2_DATA.sort(() => Math.random() - 0.5).slice(0, 15);
+        state.mode2.queue = [...MODE2_DATA].sort(() => Math.random() - 0.5).slice(0, 15);
         state.mode2.index = 0; state.mode2.score = 0; state.mode2.missed = [];
         showMode2();
     }
@@ -545,7 +595,7 @@
         const item = state.mode2.queue[state.mode2.index];
         document.getElementById('mode2-progress').textContent = `SUBJECT ${state.mode2.index + 1} / 15`;
         document.getElementById('mode2-target').textContent = item.es;
-        document.getElementById('mode2-context').textContent = item.context || "Extract the translation.";
+        document.getElementById('mode2-context').textContent = item.context || "Extract the interpretation.";
         document.getElementById('mode2-input').value = "";
         document.getElementById('mode2-feedback').innerHTML = "";
         document.getElementById('mode2-input').focus();
@@ -561,6 +611,7 @@
         const answers = [item.en, ...item.alts].map(a => a.toLowerCase().trim().replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, ""));
         const isCorrect = answers.some(ans => input === ans || input === ans.replace(/^(i|you|he|she|it|we|they|you all) /g, ""));
         const fb = document.getElementById('mode2-feedback');
+        
         if (isCorrect) {
             state.mode2.score++;
             fb.innerHTML = '<span class="stamp-approve">VERIFIED</span>';
@@ -576,6 +627,7 @@
         else showSummary(state.mode2.score, 15, state.mode2.missed);
     }
 
+    // MODE 3
     function renderMode3() {
         const list = document.getElementById('mode3-list');
         list.innerHTML = '';
@@ -587,9 +639,9 @@
                 <div class="dossier-tab">RECORDS FILE #${9000+idx}</div>
                 <div class="border-b-8 border-black/20 pb-4 mb-10 flex justify-between items-end">
                     <span class="text-4xl md:text-6xl font-black cinzel tracking-tighter uppercase">${verb}</span>
-                    <button onclick="revealDef(this, '${meaning}')" class="typewriter text-xs font-black border-2 border-black px-4 py-1 hover:bg-black hover:text-tan transition-colors">REVEAL DEFINITION</button>
+                    <button onclick="revealDef(this, '${meaning}')" class="typewriter text-xs font-black border-2 border-black px-4 py-1 hover:bg-black hover:text-white transition-colors">REVEAL DEFINITION</button>
                 </div>
-                <div class="grid grid-cols-1 gap-4">
+                <div class="grid grid-cols-1 gap-6">
                     ${["yo", "tú", "él / ella / ud.", "nosotros", "ellos / ellas / uds."].map((p, i) => `
                         <div onclick="toggleBlur(this)" class="flex justify-between items-center bg-black/5 p-6 border-b-2 border-black/20 hover:bg-black/10 transition-colors cursor-pointer group">
                             <div class="typewriter text-sm md:text-xl font-black opacity-100 uppercase tracking-tighter text-black">${p}</div>
@@ -604,9 +656,14 @@
         });
     }
 
-    function revealDef(btn, text) { btn.textContent = text.toUpperCase(); btn.classList.add('bg-blood', 'text-white', 'border-blood'); }
+    function revealDef(btn, text) { 
+        btn.textContent = text.toUpperCase(); 
+        btn.classList.add('bg-blood', 'text-white', 'border-blood'); 
+    }
 
-    function toggleBlur(el) { const text = el.querySelector('.blur-intel'); text.classList.toggle('revealed'); }
+    function toggleBlur(el) { 
+        el.classList.toggle('revealed'); 
+    }
 
     function showSummary(score, total, missed) {
         changeView('summary');
