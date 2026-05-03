@@ -15,7 +15,7 @@
             --blood: #660000;
             --noir-black: #030303;
             --desk: #140b08;
-            --folder-tan: #b8af9f; /* Darker for better contrast */
+            --folder-tan: #b0a798; /* Adjusted for even better contrast */
         }
 
         body {
@@ -30,11 +30,11 @@
             background-attachment: fixed;
         }
 
-        /* Cinematic Overlays */
+        /* Adjusted Vignette: Wider ellipse so it doesn't clip title/bottom content */
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 10%, rgba(0,0,0,0.95) 100%);
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.85) 100%);
             pointer-events: none;
             z-index: 100;
         }
@@ -44,7 +44,7 @@
             inset: 0;
             pointer-events: none;
             z-index: 101;
-            opacity: 0.08;
+            opacity: 0.07;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
@@ -65,7 +65,6 @@
         .safe-pt { padding-top: env(safe-area-inset-top, 20px); }
         .safe-pb { padding-bottom: env(safe-area-inset-bottom, 20px); }
 
-        /* Frame */
         .desktop-frame {
             min-height: 100vh;
             display: flex;
@@ -99,7 +98,7 @@
             transform: translateY(-5px);
             border-color: var(--bright-gold);
             filter: brightness(1.2);
-            box-shadow: 0 20px 50px rgba(0,0,0,1), 0 0 20px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,1);
         }
 
         .btn-mafia:active {
@@ -123,7 +122,7 @@
 
         .dossier-folder {
             background-color: var(--folder-tan);
-            color: #050505; /* High-contrast black for readability */
+            color: #000000; /* Deepest black for text on tan folder */
             padding: 30px;
             border-left: 14px solid var(--blood);
             box-shadow: 20px 25px 60px rgba(0,0,0,0.8);
@@ -151,7 +150,7 @@
             font-family: 'Special Elite', monospace;
             font-size: 11px;
             border-radius: 5px 5px 0 0;
-            color: #111;
+            color: #000;
             font-weight: bold;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
         }
@@ -169,7 +168,6 @@
             width: 100%;
             max-width: 800px;
             outline: none;
-            transition: all 0.3s;
         }
 
         @media (min-width: 768px) {
@@ -261,7 +259,7 @@
                 <div class="space-y-6">
                     <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Target Stream</label>
                     <select id="setting-mode1-filter" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
-                        <option value="story">El Escape Cubano (Core)</option>
+                        <option value="story">El Escape Cubano (Mission Core)</option>
                         <option value="mixed">Mixed Assets (Everything)</option>
                     </select>
                 </div>
@@ -277,7 +275,7 @@
                 <div class="space-y-6">
                     <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Intelligence Voice</label>
                     <select id="setting-voice" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
-                        <option value="PREMIUM_US">🇺🇸 Google US / Siri Enhanced</option>
+                        <option value="GOOGLE_US">🇺🇸 Google Español (Estados Unidos)</option>
                     </select>
                 </div>
             </div>
@@ -298,8 +296,8 @@
 
             <div class="text-center space-y-12 min-h-[250px] md:min-h-[400px] w-full px-6">
                 <p id="mode1-es" class="text-4xl md:text-8xl italic font-serif text-white leading-tight hidden drop-shadow-[0_8px_20px_rgba(0,0,0,1)]"></p>
-                <!-- English is strictly wiped between items -->
-                <div id="mode1-en" class="text-2xl md:text-5xl typewriter gold-metal opacity-0 transition-opacity duration-1000 bg-black/70 p-8 md:p-14 inline-block border-2 border-gold/10"></div>
+                <!-- english_translation is strictly handled via hidden class and text wipe to prevent leaks -->
+                <div id="mode1-en" class="text-2xl md:text-5xl typewriter gold-metal hidden opacity-0 transition-opacity duration-1000 bg-black/70 p-8 md:p-14 inline-block border-2 border-gold/10"></div>
             </div>
         </div>
 
@@ -356,7 +354,7 @@
 
             <div id="missed-container" class="text-left hidden border-t-8 border-black/10 pt-16">
                 <h3 class="typewriter text-xs md:text-lg font-black uppercase mb-12 text-red-950 underline decoration-8">Identified Data Leaks:</h3>
-                <div id="missed-list" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 md:gap-x-24 gap-y-6 md:gap-y-10 text-xl md:text-3xl typewriter italic text-black"></div>
+                <div id="missed-list" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 md:gap-x-24 gap-y-6 md:gap-y-10 text-xl md:text-3xl typewriter italic"></div>
             </div>
 
             <button onclick="changeView('home')" class="w-full py-8 md:py-12 btn-mafia text-2xl md:text-4xl mt-12 md:mt-24">RETURN TO BASE</button>
@@ -370,9 +368,9 @@
 </div>
 
 <script>
-    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-desktop-v4';
+    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-desktop-v5';
 
-    // Intel Data
+    // Content Bank
     const MODE1_DATA = [
         {es: "Miguel vivió en Cuba muchos años.", en: "Miguel lived in Cuba for many years.", story: true},
         {es: "Yo viví en la playa el verano pasado.", en: "I lived at the beach last summer.", story: false},
@@ -388,7 +386,7 @@
         {es: "La familia compró un neumático.", en: "The family bought a tire.", story: true},
         {es: "El tiburón llegó a la balsa.", en: "The shark arrived at the raft.", story: true},
         {es: "La familia llegó a Florida.", en: "The family arrived in Florida.", story: true},
-        {es: "Rita regresó a Cuba en el barco.", en: "Rita returned to Cuba on the boat.", story: true},
+        {es: "Rita regresó a Cuba en the barco.", en: "Rita returned to Cuba on the boat.", story: true},
         {es: "La familia se levantó para escapar.", en: "The family got up to escape.", story: true},
         {es: "La balsa se movió en el agua.", en: "The raft moved in the water.", story: true},
         {es: "El viaje fue un problema grande.", en: "The trip was a big problem.", story: true},
@@ -402,7 +400,7 @@
         {es: "agarró", en: "he grabbed", alts: ["grabbed", "she grabbed"]},
         {es: "vomitó", en: "he vomited", alts: ["vomited"]},
         {es: "llegué", en: "I arrived", alts: ["arrived"]},
-        {es: "fui", en: "I was / I went", alts: ["was", "went"], context: "Yo fui un buen amigo. / Yo fui al parque."},
+        {es: "fui", en: "I was / I went", alts: ["was", "went"], context: "Yo fui un amigo. / Yo fui al parque."},
         {es: "fue", en: "he was / he went", alts: ["was", "went", "she was", "it was"], context: "Él fue importante. / Él fue a Florida."},
         {es: "hizo", en: "he made", alts: ["made", "did"]},
         {es: "tuve", en: "I had", alts: ["had"]}
@@ -428,7 +426,7 @@
 
     let state = {
         currentView: 'home',
-        settings: { mode1Filter: 'story', voiceName: 'PREMIUM_US', voiceRate: 0.8 },
+        settings: { mode1Filter: 'story', voiceName: 'GOOGLE_US', voiceRate: 0.8 },
         mode1: { queue: [], index: 0 },
         mode2: { queue: [], index: 0, score: 0, missed: [] },
         voices: []
@@ -445,14 +443,14 @@
         const populate = () => {
             state.voices = window.speechSynthesis.getVoices();
             const select = document.getElementById('setting-voice');
-            
-            // Aggressive search for premium voices
-            const targetNames = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica", "Jorge"];
+            const targetName = "Google español de Estados Unidos";
             const spanish = state.voices.filter(v => v.lang.toLowerCase().startsWith('es'));
             
-            let bestVoice = spanish.find(v => targetNames.some(t => v.name.includes(t)));
-            
-            select.innerHTML = bestVoice ? `<option value="PREMIUM_US">🇺🇸 Premium Voice (Priority)</option>` : '<option value="">System Standard</option>';
+            // Prefer the specific requested name
+            let bestVoice = spanish.find(v => v.name === targetName);
+            if (!bestVoice) bestVoice = spanish.find(v => v.lang.includes('US') || v.name.includes('US'));
+
+            select.innerHTML = bestVoice ? `<option value="GOOGLE_US">🇺🇸 Google US (Priority)</option>` : '<option value="">System Default</option>';
             
             spanish.forEach(v => {
                 const opt = document.createElement('option');
@@ -492,21 +490,23 @@
         }
     }
 
+    function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+
     function speak(text) {
         const msg = new SpeechSynthesisUtterance(text);
         msg.lang = 'es-MX';
         msg.rate = state.settings.voiceRate || 0.8;
         
         const vs = state.settings.voiceName;
-        if (vs === "PREMIUM_US") {
-            const targets = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica"];
-            const target = state.voices.find(v => targets.some(t => v.name.includes(t)));
+        if (vs === "GOOGLE_US" || !vs) {
+            const target = state.voices.find(v => v.name === "Google español de Estados Unidos") || 
+                           state.voices.find(v => v.lang.includes('US') || v.name.includes('US')) ||
+                           state.voices.find(v => v.lang.startsWith('es'));
             if (target) msg.voice = target;
         } else if (vs) {
             const v = state.voices.find(v => v.name === vs);
             if (v) msg.voice = v;
         }
-        
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(msg);
     }
@@ -515,7 +515,7 @@
     function startMode1() {
         const f = state.settings.mode1Filter;
         let pool = f === 'story' ? MODE1_DATA.filter(d => d.story) : MODE1_DATA;
-        state.mode1.queue = pool.sort(() => Math.random() - 0.5).slice(0, 10);
+        state.mode1.queue = shuffle([...pool]).slice(0, 10);
         state.mode1.index = 0;
         showMode1();
     }
@@ -525,16 +525,15 @@
         const esEl = document.getElementById('mode1-es');
         const enEl = document.getElementById('mode1-en');
         
-        // PHYSICAL CLEAR of text to prevent premature leak
-        enEl.style.transition = 'none'; 
+        // HARD RESET: physical hidden and text wipe to prevent leaks
+        enEl.classList.add('hidden');
         enEl.classList.add('opacity-0');
         enEl.textContent = ""; 
-        enEl.offsetHeight; 
         
         esEl.textContent = item.es;
         esEl.classList.add('hidden');
         
-        document.getElementById('mode1-progress').textContent = `INTERCEPT ${state.mode1.index + 1} / 10`;
+        document.getElementById('mode1-progress').textContent = `ASSET ${state.mode1.index + 1} / 10`;
         document.getElementById('btn-reveal').classList.remove('hidden');
         
         setTimeout(() => speak(item.es), 600);
@@ -546,9 +545,15 @@
         const enEl = document.getElementById('mode1-en');
         
         enEl.textContent = item.en;
+        enEl.classList.remove('hidden');
         esEl.classList.remove('hidden');
-        enEl.style.transition = 'opacity 1s';
-        enEl.classList.remove('opacity-0');
+        
+        // Delay visual transition so it doesn't flicker
+        setTimeout(() => {
+            enEl.style.transition = 'opacity 1s';
+            enEl.classList.remove('opacity-0');
+        }, 10);
+
         document.getElementById('btn-reveal').classList.add('hidden');
     }
 
@@ -557,13 +562,11 @@
         else showSummary(10, 10, []);
     }
 
-    function speakCurrentSentence() {
-        speak(state.mode1.queue[state.mode1.index].es);
-    }
+    function speakCurrentSentence() { speak(state.mode1.queue[state.mode1.index].es); }
 
     // MODE 2
     function startMode2() {
-        state.mode2.queue = MODE2_DATA.sort(() => Math.random() - 0.5).slice(0, 15);
+        state.mode2.queue = shuffle([...MODE2_DATA]).slice(0, 15);
         state.mode2.index = 0; state.mode2.score = 0; state.mode2.missed = [];
         showMode2();
     }
@@ -604,6 +607,7 @@
         else showSummary(state.mode2.score, 15, state.mode2.missed);
     }
 
+    // MODE 3
     function renderMode3() {
         const list = document.getElementById('mode3-list');
         list.innerHTML = '';
@@ -619,7 +623,7 @@
                 <div class="grid grid-cols-1 gap-6">
                     ${["yo", "tú", "él / ella / ud.", "nosotros", "ellos / ellas / uds."].map((p, i) => `
                         <div class="flex justify-between items-center bg-black/5 p-6 border-b-2 border-black/20 hover:bg-black/10 transition-colors">
-                            <div class="typewriter text-sm md:text-xl font-black opacity-80 uppercase tracking-tighter">${p}</div>
+                            <div class="typewriter text-sm md:text-xl font-black opacity-100 uppercase tracking-tighter">${p}</div>
                             <div class="text-2xl md:text-4xl font-black blur-[18px] hover:blur-none transition-all duration-700 cursor-help select-none" title="Reveal Intel">
                                 ${MODE3_DATA[verb][i]}
                             </div>
