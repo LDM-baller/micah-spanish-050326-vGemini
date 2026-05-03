@@ -13,9 +13,9 @@
             --bright-gold: #fcf6ba;
             --deep-gold: #926d15;
             --blood: #660000;
-            --noir-black: #050505;
-            --desk: #1a0f0a;
-            --folder-tan: #c9c0b3;
+            --noir-black: #030303;
+            --desk: #140b08;
+            --folder-tan: #b8af9f; /* Darker for better contrast */
         }
 
         body {
@@ -24,9 +24,8 @@
             font-family: 'Playfair Display', serif;
             margin: 0;
             overflow-x: hidden;
-            /* Combined gradient and texture for both online/offline support */
             background-image: 
-                radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.95) 100%),
+                radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.98) 100%),
                 url("https://www.transparenttextures.com/patterns/dark-leather.png");
             background-attachment: fixed;
         }
@@ -35,7 +34,7 @@
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 10%, rgba(0,0,0,0.9) 100%);
+            background: radial-gradient(circle, transparent 10%, rgba(0,0,0,0.95) 100%);
             pointer-events: none;
             z-index: 100;
         }
@@ -45,13 +44,9 @@
             inset: 0;
             pointer-events: none;
             z-index: 101;
-            opacity: 0.06;
+            opacity: 0.08;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
-
-        /* Responsive Safe Areas */
-        .safe-pt { padding-top: env(safe-area-inset-top, 20px); }
-        .safe-pb { padding-bottom: env(safe-area-inset-bottom, 20px); }
 
         /* Typography */
         .cinzel-header { font-family: 'Cinzel Decorative', serif; }
@@ -62,11 +57,15 @@
             background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,1));
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,1));
             font-weight: 900;
         }
 
-        /* Adaptive Frame */
+        /* Responsive Safe Areas */
+        .safe-pt { padding-top: env(safe-area-inset-top, 20px); }
+        .safe-pb { padding-bottom: env(safe-area-inset-bottom, 20px); }
+
+        /* Frame */
         .desktop-frame {
             min-height: 100vh;
             display: flex;
@@ -78,7 +77,7 @@
         }
 
         .btn-mafia {
-            background: linear-gradient(180deg, #222 0%, #000 100%);
+            background: linear-gradient(180deg, #1a1a1a 0%, #000 100%);
             border: 2px solid var(--deep-gold);
             color: var(--gold);
             font-family: 'Cinzel', serif;
@@ -86,21 +85,21 @@
             text-transform: uppercase;
             padding: 15px 30px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+            box-shadow: 0 10px 40px rgba(0,0,0,1);
             position: relative;
             overflow: hidden;
             font-weight: 900;
         }
 
         @media (min-width: 768px) {
-            .btn-mafia { padding: 25px 50px; letter-spacing: 4px; }
+            .btn-mafia { padding: 25px 60px; letter-spacing: 5px; }
         }
 
         .btn-mafia:hover {
             transform: translateY(-5px);
             border-color: var(--bright-gold);
-            box-shadow: 0 25px 50px rgba(0,0,0,1);
             filter: brightness(1.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,1), 0 0 20px rgba(212, 175, 55, 0.2);
         }
 
         .btn-mafia:active {
@@ -109,67 +108,64 @@
             color: white;
         }
 
-        /* Responsive Dossier Style */
+        /* Dossier Style (Mode 3) */
         .dossier-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 20px;
             width: 100%;
             max-width: 1400px;
         }
 
         @media (min-width: 768px) {
-            .dossier-grid { grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 50px; }
+            .dossier-grid { grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 50px; }
         }
 
         .dossier-folder {
             background-color: var(--folder-tan);
-            color: #0c0c0c;
-            padding: 25px;
-            border-left: 10px solid var(--blood);
-            box-shadow: 15px 20px 50px rgba(0,0,0,0.7);
+            color: #050505; /* High-contrast black for readability */
+            padding: 30px;
+            border-left: 14px solid var(--blood);
+            box-shadow: 20px 25px 60px rgba(0,0,0,0.8);
             position: relative;
             transform: rotate(-0.5deg);
             transition: all 0.4s ease;
         }
 
         @media (min-width: 768px) {
-            .dossier-folder { padding: 50px; border-left: 18px solid var(--blood); }
+            .dossier-folder { padding: 50px; border-left: 20px solid var(--blood); }
         }
 
         .dossier-folder:hover {
-            transform: rotate(0deg) translateY(-10px);
+            transform: rotate(0deg) translateY(-12px);
             z-index: 20;
-            box-shadow: 20px 30px 60px rgba(0,0,0,0.8);
+            box-shadow: 30px 40px 80px rgba(0,0,0,0.9);
         }
 
         .dossier-tab {
             position: absolute;
-            top: -20px;
+            top: -24px;
             left: 20px;
             background: var(--folder-tan);
-            padding: 4px 15px;
+            padding: 5px 25px;
             font-family: 'Special Elite', monospace;
-            font-size: 10px;
-            border-radius: 4px 4px 0 0;
-            color: #222;
+            font-size: 11px;
+            border-radius: 5px 5px 0 0;
+            color: #111;
             font-weight: bold;
-        }
-
-        @media (min-width: 768px) {
-            .dossier-tab { top: -28px; left: 30px; padding: 6px 30px; font-size: 14px; border-radius: 6px 6px 0 0; }
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
         }
 
         /* Interrogation Room Input */
         .interrogation-input {
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.98);
             border: none;
-            border-bottom: 4px solid var(--blood);
+            border-bottom: 6px solid var(--blood);
             color: var(--gold);
             font-size: 2rem;
             text-align: center;
             font-family: 'Special Elite', monospace;
-            padding: 10px;
+            padding: 15px;
             width: 100%;
             max-width: 800px;
             outline: none;
@@ -177,7 +173,7 @@
         }
 
         @media (min-width: 768px) {
-            .interrogation-input { border-bottom: 6px solid var(--blood); font-size: 4rem; padding: 20px; }
+            .interrogation-input { font-size: 5rem; padding: 25px; }
         }
 
         .interrogation-input:focus {
@@ -188,38 +184,34 @@
         /* Animations */
         .fade-in { animation: fadeIn 0.8s ease-out forwards; }
         @keyframes fadeIn {
-            from { opacity: 0; filter: blur(15px); transform: scale(0.95); }
+            from { opacity: 0; filter: blur(20px); transform: scale(0.9); }
             to { opacity: 1; filter: blur(0); }
         }
 
         .stamp-approve {
             color: var(--blood);
-            border: 4px solid var(--blood);
-            padding: 5px 20px;
+            border: 6px solid var(--blood);
+            padding: 10px 40px;
             font-family: 'Special Elite', monospace;
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             font-weight: 900;
             text-transform: uppercase;
             transform: rotate(-25deg);
-            opacity: 0.9;
+            opacity: 0.95;
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 30px;
+            right: 30px;
             pointer-events: none;
-            animation: stampAnim 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @media (min-width: 768px) {
-            .stamp-approve { border: 6px solid var(--blood); padding: 10px 40px; font-size: 3rem; top: 40px; right: 40px; }
+            animation: stampAnim 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes stampAnim {
-            from { transform: scale(3) rotate(0deg); opacity: 0; }
-            to { transform: scale(1) rotate(-25deg); opacity: 0.9; }
+            from { transform: scale(4) rotate(0deg); opacity: 0; }
+            to { transform: scale(1) rotate(-25deg); opacity: 0.95; }
         }
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--deep-gold); border-radius: 5px; }
     </style>
 </head>
@@ -230,62 +222,62 @@
 
 <div class="desktop-frame">
     
-    <!-- Adaptive Header -->
+    <!-- Cinematic Header -->
     <header class="text-center mb-12 md:mb-24 relative">
-        <div class="mb-4 md:mb-6 opacity-60">
-            <svg width="120" height="50" viewBox="0 0 200 80" class="mx-auto md:w-[240px] md:h-[100px]">
+        <div class="mb-6 opacity-60">
+            <svg width="200" height="80" viewBox="0 0 200 80" class="mx-auto md:w-[240px] md:h-[100px]">
                 <line x1="40" y1="0" x2="40" y2="60" stroke="white" stroke-width="1.5"/>
                 <line x1="100" y1="0" x2="100" y2="75" stroke="white" stroke-width="1.5"/>
                 <line x1="160" y1="0" x2="160" y2="60" stroke="white" stroke-width="1.5"/>
                 <path d="M20 25 Q 100 0 180 25" stroke="white" fill="none" stroke-width="1.5"/>
             </svg>
         </div>
-        <h1 class="text-4xl md:text-8xl cinzel-header gold-metal tracking-tighter mb-2 md:mb-4">EL PADRINO</h1>
-        <p class="text-[8px] md:text-sm tracking-[0.5em] md:tracking-[1.2em] uppercase opacity-50 typewriter">Intelligence Bureau — Pretérito Division</p>
+        <h1 class="text-5xl md:text-9xl cinzel-header gold-metal tracking-tighter mb-4">EL PADRINO</h1>
+        <p class="text-[10px] md:text-sm tracking-[0.8em] md:tracking-[1.5em] uppercase opacity-50 typewriter">Intelligence Bureau — Pretérito Division</p>
     </header>
 
-    <!-- Views -->
-    <div id="view-home" class="view fade-in space-y-8 md:space-y-16 text-center w-full max-w-6xl">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
+    <!-- Main View Switcher -->
+    <div id="view-home" class="view fade-in space-y-12 md:space-y-20 text-center w-full max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <button onclick="changeView('mode1')" class="btn-mafia">
-                <span class="block text-[10px] md:text-sm opacity-40 mb-1 md:mb-3 typewriter">Operation</span>
-                <span class="text-2xl md:text-5xl">ESCUCHA</span>
+                <span class="block text-xs opacity-40 mb-3 typewriter">Operation</span>
+                <span class="text-3xl md:text-6xl">ESCUCHA</span>
             </button>
             <button onclick="changeView('mode2')" class="btn-mafia">
-                <span class="block text-[10px] md:text-sm opacity-40 mb-1 md:mb-3 typewriter">Interrogation</span>
-                <span class="text-2xl md:text-5xl">VERBOS</span>
+                <span class="block text-xs opacity-40 mb-3 typewriter">Interrogation</span>
+                <span class="text-3xl md:text-6xl">VERBOS</span>
             </button>
         </div>
         
-        <button onclick="changeView('mode3')" class="w-full py-6 md:py-12 border-2 border-dashed border-gold/20 text-gold text-lg md:text-3xl cinzel-sub hover:bg-gold/10 hover:border-gold transition-all shadow-2xl">
-            Access The Archives (Conjugations)
+        <button onclick="changeView('mode3')" class="w-full py-10 md:py-16 border-2 border-dashed border-gold/20 text-gold text-xl md:text-4xl cinzel-sub hover:bg-gold/10 hover:border-gold transition-all shadow-2xl bg-black/40">
+            Access The Evidence Archives (Conjugations)
         </button>
 
         <!-- Settings Console -->
-        <div class="bg-black/80 border-2 border-gold/20 p-6 md:p-12 mt-12 md:mt-24 shadow-2xl relative">
-            <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-noir-black px-4 md:px-8 border-2 border-gold/20 text-gold text-[8px] md:text-xs font-black uppercase tracking-[0.4em] whitespace-nowrap">Operations Control</div>
+        <div class="bg-black/80 border-2 border-gold/20 p-10 md:p-16 mt-12 md:mt-24 shadow-[0_0_150px_rgba(0,0,0,1)] relative">
+            <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-noir-black px-10 border-2 border-gold/20 text-gold text-xs font-black uppercase tracking-[0.6em] whitespace-nowrap">Operations Control</div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-16">
-                <div class="space-y-3 md:space-y-6">
-                    <label class="block text-[9px] md:text-xs uppercase tracking-widest opacity-40 typewriter">Intel Stream</label>
-                    <select id="setting-mode1-filter" class="w-full bg-black border-2 border-gold/40 text-white text-xs md:text-md p-3 md:p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
-                        <option value="story">El Escape Cubano (Mission Core)</option>
-                        <option value="mixed">All Known Assets (Mixed)</option>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20">
+                <div class="space-y-6">
+                    <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Target Stream</label>
+                    <select id="setting-mode1-filter" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
+                        <option value="story">El Escape Cubano (Core)</option>
+                        <option value="mixed">Mixed Assets (Everything)</option>
                     </select>
                 </div>
-                <div class="space-y-3 md:space-y-6">
-                    <label class="block text-[9px] md:text-xs uppercase tracking-widest opacity-40 typewriter">Audio Speed</label>
-                    <select id="setting-voice-rate" class="w-full bg-black border-2 border-gold/40 text-white text-xs md:text-md p-3 md:p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
+                <div class="space-y-6">
+                    <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Audio Speed</label>
+                    <select id="setting-voice-rate" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
                         <option value="0.4">Snail (0.4x)</option>
                         <option value="0.6">Slow (0.6x)</option>
                         <option value="0.8" selected>Learner (0.8x)</option>
                         <option value="1.0">Native Agent (1.0x)</option>
                     </select>
                 </div>
-                <div class="space-y-3 md:space-y-6">
-                    <label class="block text-[9px] md:text-xs uppercase tracking-widest opacity-40 typewriter">Asset Voice</label>
-                    <select id="setting-voice" class="w-full bg-black border-2 border-gold/40 text-white text-xs md:text-md p-3 md:p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
-                        <option value="GOOGLE_US">Google Español (Estados Unidos)</option>
+                <div class="space-y-6">
+                    <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Intelligence Voice</label>
+                    <select id="setting-voice" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
+                        <option value="PREMIUM_US">🇺🇸 Google US / Siri Enhanced</option>
                     </select>
                 </div>
             </div>
@@ -294,95 +286,96 @@
 
     <!-- Mode 1: Escucha -->
     <div id="view-mode1" class="view hidden fade-in w-full max-w-7xl flex flex-col items-center">
-        <div class="w-full flex justify-between items-center mb-8 md:mb-16 px-4">
-            <button onclick="changeView('home')" class="text-gold cinzel-sub text-sm md:text-2xl hover:brightness-150 transition-all">← ABORT</button>
-            <div id="mode1-progress" class="typewriter text-xs md:text-3xl text-gold font-black">1 / 10</div>
+        <div class="w-full flex justify-between items-center mb-12 md:mb-20 px-6">
+            <button onclick="changeView('home')" class="text-gold cinzel-sub text-xl md:text-3xl hover:brightness-150 transition-all">← ABORT MISSION</button>
+            <div id="mode1-progress" class="typewriter text-2xl md:text-4xl text-gold font-black">ASSET 1 / 10</div>
         </div>
 
-        <div class="flex flex-col items-center space-y-8 md:space-y-16 flex-1 justify-center w-full">
-            <button onclick="speakCurrentSentence()" class="group relative w-40 h-40 md:w-80 md:h-84 rounded-full border-[8px] md:border-[12px] border-double border-gold/30 bg-black/60 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-500 shadow-[0_0_150px_rgba(212,175,55,0.15)]">
-                <svg width="60" height="60" fill="var(--gold)" viewBox="0 0 256 256" class="md:w-[120px] md:h-[120px] group-hover:fill-white transition-colors"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm36.44,110.83-40,24A8,8,0,0,1,112,152V104a8,8,0,0,1,12.44-6.67l40,24a8,8,0,0,1,0,13.34Z"></path></svg>
+        <div class="flex flex-col items-center space-y-12 md:space-y-20 flex-1 justify-center w-full">
+            <button onclick="speakCurrentSentence()" class="group relative w-56 h-56 md:w-96 md:h-96 rounded-full border-[10px] md:border-[16px] border-double border-gold/30 bg-black/70 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-500 shadow-[0_0_200px_rgba(212,175,55,0.2)]">
+                <svg width="100" height="100" fill="var(--gold)" viewBox="0 0 256 256" class="md:w-[150px] md:h-[150px] group-hover:fill-white transition-colors"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm36.44,110.83-40,24A8,8,0,0,1,112,152V104a8,8,0,0,1,12.44-6.67l40,24a8,8,0,0,1,0,13.34Z"></path></svg>
             </button>
 
-            <div class="text-center space-y-6 md:space-y-12 min-h-[150px] md:min-h-[300px] w-full px-4">
-                <p id="mode1-es" class="text-2xl md:text-6xl italic font-serif text-white leading-tight hidden drop-shadow-[0_5px_15px_rgba(0,0,0,1)]"></p>
-                <div id="mode1-en" class="text-lg md:text-4xl typewriter gold-metal opacity-0 transition-opacity duration-1000 bg-black/60 p-4 md:p-10 inline-block border-2 border-gold/10"></div>
+            <div class="text-center space-y-12 min-h-[250px] md:min-h-[400px] w-full px-6">
+                <p id="mode1-es" class="text-4xl md:text-8xl italic font-serif text-white leading-tight hidden drop-shadow-[0_8px_20px_rgba(0,0,0,1)]"></p>
+                <!-- English is strictly wiped between items -->
+                <div id="mode1-en" class="text-2xl md:text-5xl typewriter gold-metal opacity-0 transition-opacity duration-1000 bg-black/70 p-8 md:p-14 inline-block border-2 border-gold/10"></div>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 md:gap-16 w-full max-w-4xl mt-10 md:mt-20 pb-20 px-4">
-            <button id="btn-reveal" onclick="revealMode1()" class="py-4 md:py-8 border-2 md:border-4 border-gold/30 text-gold text-lg md:text-3xl cinzel font-black hover:bg-gold/10">DECIPHER</button>
-            <button onclick="nextMode1()" class="btn-mafia text-lg md:text-3xl">CONTINUE</button>
+        <div class="grid grid-cols-2 gap-10 md:gap-20 w-full max-w-4xl mt-16 md:mt-24 pb-32">
+            <button id="btn-reveal" onclick="revealMode1()" class="py-6 md:py-10 border-4 border-gold/30 text-gold text-2xl md:text-4xl cinzel font-black hover:bg-gold/10 hover:border-gold">DECIPHER</button>
+            <button onclick="nextMode1()" class="btn-mafia text-2xl md:text-4xl">CONTINUE</button>
         </div>
     </div>
 
     <!-- Mode 2: Verbos -->
     <div id="view-mode2" class="view hidden fade-in w-full max-w-6xl flex flex-col items-center">
-        <div class="w-full flex justify-between items-center mb-10 md:mb-16 px-4">
-            <button onclick="changeView('home')" class="text-gold cinzel-sub text-sm md:text-2xl hover:brightness-150 transition-all">← END INTERROGATION</button>
-            <div id="mode2-progress" class="typewriter text-xs md:text-3xl text-gold font-black">1 / 15</div>
+        <div class="w-full flex justify-between items-center mb-12 px-6">
+            <button onclick="changeView('home')" class="text-gold cinzel-sub text-xl md:text-3xl hover:brightness-150 transition-all">← END INTERROGATION</button>
+            <div id="mode2-progress" class="typewriter text-2xl md:text-4xl text-gold font-black">SUBJECT 1 / 15</div>
         </div>
 
-        <div class="w-full flex-1 flex flex-col items-center justify-center space-y-12 md:space-y-24">
+        <div class="w-full flex-1 flex flex-col items-center justify-center space-y-20 md:space-y-32">
             <div class="text-center relative">
-                <div class="hidden md:block absolute -top-52 left-1/2 -translate-x-1/2 w-[6px] h-64 bg-white/10 opacity-30 shadow-[0_0_80px_rgba(255,255,255,0.3)]"></div>
-                <span class="text-[10px] md:text-sm tracking-[0.5em] md:tracking-[0.8em] opacity-30 typewriter uppercase block mb-4">Intel Under Analysis</span>
-                <h2 id="mode2-target" class="text-6xl md:text-[12rem] font-black gold-metal tracking-tighter leading-none"></h2>
-                <p id="mode2-context" class="typewriter text-sm md:text-2xl italic opacity-30 mt-6 md:mt-12 px-6 md:px-32 leading-relaxed font-serif"></p>
+                <div class="absolute -top-60 left-1/2 -translate-x-1/2 w-[8px] h-80 bg-white/10 opacity-40 shadow-[0_0_100px_rgba(255,255,255,0.4)]"></div>
+                <span class="text-sm md:text-lg tracking-[1em] opacity-40 typewriter uppercase block mb-10">Restricted Asset Analysis</span>
+                <h2 id="mode2-target" class="text-7xl md:text-[14rem] font-black gold-metal tracking-tighter leading-none"></h2>
+                <p id="mode2-context" class="typewriter text-lg md:text-3xl italic opacity-30 mt-12 md:mt-20 px-10 md:px-40 leading-relaxed font-serif"></p>
             </div>
 
-            <div class="w-full flex flex-col items-center space-y-8 md:space-y-16 px-6">
-                <input type="text" id="mode2-input" autocomplete="off" class="interrogation-input" placeholder="State Intel...">
-                <div id="mode2-feedback" class="h-12 md:h-24 flex items-center justify-center"></div>
+            <div class="w-full flex flex-col items-center space-y-12 md:space-y-20 px-8">
+                <input type="text" id="mode2-input" autocomplete="off" class="interrogation-input" placeholder="Submit Statement...">
+                <div id="mode2-feedback" class="h-20 md:h-32 flex items-center justify-center"></div>
             </div>
         </div>
 
-        <button id="btn-submit-mode2" onclick="checkMode2()" class="w-full max-w-3xl py-6 md:py-10 btn-mafia text-xl md:text-4xl font-black mt-10 md:mt-20 mb-20">CONFIRM INTEL</button>
+        <button id="btn-submit-mode2" onclick="checkMode2()" class="w-full max-w-3xl py-8 md:py-12 btn-mafia text-2xl md:text-5xl font-black mt-20 md:mt-32 mb-32">CONFIRM INTEL</button>
     </div>
 
     <!-- Mode 3: Archives -->
-    <div id="view-mode3" class="view hidden fade-in w-full flex flex-col items-center px-4">
-        <div class="w-full flex justify-between items-center mb-10 md:mb-20 max-w-7xl">
-            <button onclick="changeView('home')" class="text-gold cinzel-sub text-sm md:text-3xl hover:brightness-150 transition-all">← CLOSE ARCHIVES</button>
-            <span class="text-gold/30 text-[8px] md:text-sm tracking-[0.5em] md:tracking-[1.5em] uppercase font-black">Restricted Dossier Level 9</span>
+    <div id="view-mode3" class="view hidden fade-in w-full flex flex-col items-center px-6">
+        <div class="w-full flex justify-between items-center mb-16 md:mb-24 max-w-7xl">
+            <button onclick="changeView('home')" class="text-gold cinzel-sub text-2xl md:text-4xl hover:brightness-150 transition-all">← CLOSE ARCHIVES</button>
+            <span class="text-gold/30 text-xs md:text-lg tracking-[2em] uppercase font-black">Restricted Intel Dossier</span>
         </div>
         <div id="mode3-list" class="dossier-grid"></div>
         <div class="h-64"></div>
     </div>
 
     <!-- Summary -->
-    <div id="view-summary" class="view hidden fade-in w-full max-w-4xl flex flex-col items-center justify-center px-4">
-        <div class="dossier-folder p-10 md:p-20 text-center space-y-8 md:space-y-16 w-full border-t-[8px] md:border-t-[15px] border-blood/60">
-            <div class="dossier-tab">OPERATIONAL REPORT</div>
-            <h2 class="text-3xl md:text-6xl font-black cinzel tracking-tighter border-b-4 md:border-b-8 border-black/10 pb-4 md:pb-8 uppercase">Mission Debrief</h2>
+    <div id="view-summary" class="view hidden fade-in w-full max-w-5xl flex flex-col items-center justify-center px-6">
+        <div class="dossier-folder p-12 md:p-24 text-center space-y-12 md:space-y-20 w-full border-t-[12px] md:border-t-[20px] border-blood/80">
+            <div class="dossier-tab">OPERATIONAL DEBRIEF</div>
+            <h2 class="text-4xl md:text-8xl font-black cinzel tracking-tighter border-b-8 border-black/20 pb-8 md:pb-12 uppercase">Status Report</h2>
             
-            <div class="py-6 md:py-12">
-                <p id="summary-score" class="text-6xl md:text-[10rem] font-black text-red-950 drop-shadow-2xl font-serif leading-none"></p>
-                <p class="typewriter text-[10px] md:text-md font-black uppercase tracking-[0.5em] mt-4 md:mt-8 opacity-70">Accuracy Rating</p>
+            <div class="py-10 md:py-16">
+                <p id="summary-score" class="text-8xl md:text-[14rem] font-black text-red-950 drop-shadow-2xl font-serif leading-none"></p>
+                <p class="typewriter text-sm md:text-xl font-black uppercase tracking-[1em] mt-10 md:mt-16 opacity-80 underline">Accuracy Level Verified</p>
             </div>
 
-            <div id="missed-container" class="text-left hidden border-t-2 md:border-t-4 border-black/10 pt-8 md:pt-16">
-                <h3 class="typewriter text-[10px] md:text-sm font-black uppercase mb-6 text-red-950 underline decoration-4 md:decoration-8">Identified Deficiencies:</h3>
-                <div id="missed-list" class="grid grid-cols-1 md:grid-cols-2 gap-x-10 md:gap-x-20 gap-y-3 md:gap-y-6 text-md md:text-2xl typewriter italic text-black"></div>
+            <div id="missed-container" class="text-left hidden border-t-8 border-black/10 pt-16">
+                <h3 class="typewriter text-xs md:text-lg font-black uppercase mb-12 text-red-950 underline decoration-8">Identified Data Leaks:</h3>
+                <div id="missed-list" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 md:gap-x-24 gap-y-6 md:gap-y-10 text-xl md:text-3xl typewriter italic text-black"></div>
             </div>
 
-            <button onclick="changeView('home')" class="w-full py-6 md:py-10 btn-mafia text-xl md:text-3xl mt-8 md:mt-16">RETURN TO HQ</button>
+            <button onclick="changeView('home')" class="w-full py-8 md:py-12 btn-mafia text-2xl md:text-4xl mt-12 md:mt-24">RETURN TO BASE</button>
         </div>
     </div>
 
     <!-- Footer Decor -->
-    <footer class="mt-12 md:mt-32 opacity-10 text-center pb-20 md:pb-32 pointer-events-none w-full safe-pb">
-        <p class="typewriter text-[10px] md:text-[12px] uppercase tracking-[0.5em] md:tracking-[1.5em]">Proprietà della Famiglia Corleone — Micah</p>
+    <footer class="mt-32 opacity-10 text-center pb-32 pointer-events-none w-full safe-pb">
+        <p class="typewriter text-[12px] md:text-[16px] uppercase tracking-[1em] md:tracking-[2em]">Proprietà della Famiglia Corleone — Micah</p>
     </footer>
 </div>
 
 <script>
-    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-desktop-v3';
+    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-desktop-v4';
 
-    // Same content bank as requested
+    // Intel Data
     const MODE1_DATA = [
         {es: "Miguel vivió en Cuba muchos años.", en: "Miguel lived in Cuba for many years.", story: true},
-        {es: "Yo viví en the beach last summer.", en: "I lived at the beach last summer.", story: false},
+        {es: "Yo viví en la playa el verano pasado.", en: "I lived at the beach last summer.", story: false},
         {es: "Don Vito vivió en Sicilia con su familia.", en: "Don Vito lived in Sicily with his family.", story: false},
         {es: "El padre agarró el brazo de su hermano.", en: "The father grabbed his brother's arm.", story: true},
         {es: "Yo agarré la manzana inmediatamente.", en: "I grabbed the apple immediately.", story: false},
@@ -409,7 +402,7 @@
         {es: "agarró", en: "he grabbed", alts: ["grabbed", "she grabbed"]},
         {es: "vomitó", en: "he vomited", alts: ["vomited"]},
         {es: "llegué", en: "I arrived", alts: ["arrived"]},
-        {es: "fui", en: "I was / I went", alts: ["was", "went"], context: "Yo fui un amigo. / Yo fui al parque."},
+        {es: "fui", en: "I was / I went", alts: ["was", "went"], context: "Yo fui un buen amigo. / Yo fui al parque."},
         {es: "fue", en: "he was / he went", alts: ["was", "went", "she was", "it was"], context: "Él fue importante. / Él fue a Florida."},
         {es: "hizo", en: "he made", alts: ["made", "did"]},
         {es: "tuve", en: "I had", alts: ["had"]}
@@ -435,7 +428,7 @@
 
     let state = {
         currentView: 'home',
-        settings: { mode1Filter: 'story', voiceName: 'GOOGLE_US', voiceRate: 0.8 },
+        settings: { mode1Filter: 'story', voiceName: 'PREMIUM_US', voiceRate: 0.8 },
         mode1: { queue: [], index: 0 },
         mode2: { queue: [], index: 0, score: 0, missed: [] },
         voices: []
@@ -452,11 +445,15 @@
         const populate = () => {
             state.voices = window.speechSynthesis.getVoices();
             const select = document.getElementById('setting-voice');
-            const targetName = "Google español de Estados Unidos";
+            
+            // Aggressive search for premium voices
+            const targetNames = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica", "Jorge"];
             const spanish = state.voices.filter(v => v.lang.toLowerCase().startsWith('es'));
-            const foundTarget = spanish.find(v => v.name === targetName);
-
-            select.innerHTML = foundTarget ? `<option value="GOOGLE_US">🇺🇸 Google US (Priority)</option>` : '<option value="">System Default</option>';
+            
+            let bestVoice = spanish.find(v => targetNames.some(t => v.name.includes(t)));
+            
+            select.innerHTML = bestVoice ? `<option value="PREMIUM_US">🇺🇸 Premium Voice (Priority)</option>` : '<option value="">System Standard</option>';
+            
             spanish.forEach(v => {
                 const opt = document.createElement('option');
                 opt.value = v.name;
@@ -495,22 +492,21 @@
         }
     }
 
-    function shuffle(array) {
-        return array.sort(() => Math.random() - 0.5);
-    }
-
     function speak(text) {
         const msg = new SpeechSynthesisUtterance(text);
         msg.lang = 'es-MX';
         msg.rate = state.settings.voiceRate || 0.8;
+        
         const vs = state.settings.voiceName;
-        if (vs === "GOOGLE_US") {
-            const target = state.voices.find(v => v.name === "Google español de Estados Unidos");
+        if (vs === "PREMIUM_US") {
+            const targets = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica"];
+            const target = state.voices.find(v => targets.some(t => v.name.includes(t)));
             if (target) msg.voice = target;
         } else if (vs) {
             const v = state.voices.find(v => v.name === vs);
             if (v) msg.voice = v;
         }
+        
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(msg);
     }
@@ -519,7 +515,7 @@
     function startMode1() {
         const f = state.settings.mode1Filter;
         let pool = f === 'story' ? MODE1_DATA.filter(d => d.story) : MODE1_DATA;
-        state.mode1.queue = shuffle([...pool]).slice(0, 10);
+        state.mode1.queue = pool.sort(() => Math.random() - 0.5).slice(0, 10);
         state.mode1.index = 0;
         showMode1();
     }
@@ -529,24 +525,30 @@
         const esEl = document.getElementById('mode1-es');
         const enEl = document.getElementById('mode1-en');
         
-        // Reset Premature Reveal Logic
+        // PHYSICAL CLEAR of text to prevent premature leak
         enEl.style.transition = 'none'; 
         enEl.classList.add('opacity-0');
-        enEl.textContent = item.en;
+        enEl.textContent = ""; 
         enEl.offsetHeight; 
-        enEl.style.transition = 'opacity 1s'; 
         
         esEl.textContent = item.es;
         esEl.classList.add('hidden');
         
-        document.getElementById('mode1-progress').textContent = `ASSET ${state.mode1.index + 1} / 10`;
+        document.getElementById('mode1-progress').textContent = `INTERCEPT ${state.mode1.index + 1} / 10`;
         document.getElementById('btn-reveal').classList.remove('hidden');
+        
         setTimeout(() => speak(item.es), 600);
     }
 
     function revealMode1() {
-        document.getElementById('mode1-es').classList.remove('hidden');
-        document.getElementById('mode1-en').classList.remove('opacity-0');
+        const item = state.mode1.queue[state.mode1.index];
+        const esEl = document.getElementById('mode1-es');
+        const enEl = document.getElementById('mode1-en');
+        
+        enEl.textContent = item.en;
+        esEl.classList.remove('hidden');
+        enEl.style.transition = 'opacity 1s';
+        enEl.classList.remove('opacity-0');
         document.getElementById('btn-reveal').classList.add('hidden');
     }
 
@@ -561,7 +563,7 @@
 
     // MODE 2
     function startMode2() {
-        state.mode2.queue = shuffle([...MODE2_DATA]).slice(0, 15);
+        state.mode2.queue = MODE2_DATA.sort(() => Math.random() - 0.5).slice(0, 15);
         state.mode2.index = 0; state.mode2.score = 0; state.mode2.missed = [];
         showMode2();
     }
@@ -592,7 +594,7 @@
             fb.innerHTML = '<span class="stamp-approve">VERIFIED</span>';
         } else {
             state.mode2.missed.push({es: item.es, en: item.en});
-            fb.innerHTML = `<span class="typewriter text-red-600 line-through text-lg md:text-4xl mr-4 md:mr-10 decoration-red-950 decoration-4 md:decoration-8">${raw || 'SILENCE'}</span> <span class="gold-metal text-2xl md:text-6xl">${item.en.toUpperCase()}</span>`;
+            fb.innerHTML = `<span class="typewriter text-red-600 line-through text-2xl md:text-5xl mr-10 decoration-red-950 decoration-8">${raw || 'SILENCE'}</span> <span class="gold-metal text-3xl md:text-7xl">${item.en.toUpperCase()}</span>`;
         }
         btn.textContent = "NEXT SUBJECT";
     }
@@ -602,7 +604,6 @@
         else showSummary(state.mode2.score, 15, state.mode2.missed);
     }
 
-    // MODE 3
     function renderMode3() {
         const list = document.getElementById('mode3-list');
         list.innerHTML = '';
@@ -610,16 +611,16 @@
             const card = document.createElement('div');
             card.className = 'dossier-folder';
             card.innerHTML = `
-                <div class="dossier-tab">RECORDS FILE #${5000+idx}</div>
-                <div class="border-b-4 border-black/10 pb-2 md:pb-4 mb-4 md:mb-8 flex justify-between items-end">
-                    <span class="text-2xl md:text-5xl font-black cinzel tracking-tighter">${verb.toUpperCase()}</span>
-                    <span class="typewriter text-[8px] md:text-[10px] opacity-60">Pretérito Intel</span>
+                <div class="dossier-tab">RECORDS FILE #${7000+idx}</div>
+                <div class="border-b-8 border-black/20 pb-4 mb-10 flex justify-between items-end">
+                    <span class="text-4xl md:text-6xl font-black cinzel tracking-tighter uppercase">${verb}</span>
+                    <span class="typewriter text-[10px] md:text-sm opacity-60">Pretérito Dossier</span>
                 </div>
-                <div class="grid grid-cols-1 gap-4 md:gap-6">
+                <div class="grid grid-cols-1 gap-6">
                     ${["yo", "tú", "él / ella / ud.", "nosotros", "ellos / ellas / uds."].map((p, i) => `
-                        <div class="flex justify-between items-center bg-black/5 p-3 md:p-5 border-b border-black/20 hover:bg-black/10 transition-colors">
-                            <div class="typewriter text-xs md:text-lg font-bold opacity-70 uppercase tracking-tighter">${p}</div>
-                            <div class="text-lg md:text-3xl font-black blur-[10px] md:blur-[15px] hover:blur-none transition-all duration-700 cursor-help select-none" title="Click to Reveal">
+                        <div class="flex justify-between items-center bg-black/5 p-6 border-b-2 border-black/20 hover:bg-black/10 transition-colors">
+                            <div class="typewriter text-sm md:text-xl font-black opacity-80 uppercase tracking-tighter">${p}</div>
+                            <div class="text-2xl md:text-4xl font-black blur-[18px] hover:blur-none transition-all duration-700 cursor-help select-none" title="Reveal Intel">
                                 ${MODE3_DATA[verb][i]}
                             </div>
                         </div>
@@ -637,7 +638,7 @@
         const list = document.getElementById('missed-list');
         if (missed.length > 0) {
             container.classList.remove('hidden');
-            list.innerHTML = missed.map(m => `<div>• <span class="font-bold underline decoration-red-950 decoration-4">${m.es}</span> <span class="opacity-50">is</span> <span class="font-bold">${m.en}</span></div>`).join('');
+            list.innerHTML = missed.map(m => `<div>• <span class="font-bold underline decoration-red-950 decoration-4 md:decoration-8">${m.es}</span> <span class="opacity-50">is</span> <span class="font-bold">${m.en}</span></div>`).join('');
         } else {
             container.classList.add('hidden');
         }
