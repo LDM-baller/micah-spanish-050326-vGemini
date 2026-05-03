@@ -13,9 +13,9 @@
             --bright-gold: #fcf6ba;
             --deep-gold: #926d15;
             --blood: #660000;
-            --noir-black: #030303;
+            --noir-black: #020202;
             --desk: #140b08;
-            --folder-tan: #b0a798; /* Adjusted for even better contrast */
+            --folder-tan: #b8af9f; 
         }
 
         body {
@@ -28,13 +28,14 @@
                 radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.98) 100%),
                 url("https://www.transparenttextures.com/patterns/dark-leather.png");
             background-attachment: fixed;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Adjusted Vignette: Wider ellipse so it doesn't clip title/bottom content */
+        /* Wide Ellipse Vignette to prevent clipping the Title */
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.85) 100%);
+            background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.95) 100%);
             pointer-events: none;
             z-index: 100;
         }
@@ -44,11 +45,10 @@
             inset: 0;
             pointer-events: none;
             z-index: 101;
-            opacity: 0.07;
+            opacity: 0.08;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* Typography */
         .cinzel-header { font-family: 'Cinzel Decorative', serif; }
         .cinzel-sub { font-family: 'Cinzel', serif; }
         .typewriter { font-family: 'Special Elite', monospace; }
@@ -61,9 +61,7 @@
             font-weight: 900;
         }
 
-        /* Responsive Safe Areas */
         .safe-pt { padding-top: env(safe-area-inset-top, 20px); }
-        .safe-pb { padding-bottom: env(safe-area-inset-bottom, 20px); }
 
         .desktop-frame {
             min-height: 100vh;
@@ -107,22 +105,22 @@
             color: white;
         }
 
-        /* Dossier Style (Mode 3) */
+        /* Dossier Folder */
         .dossier-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            gap: 40px;
             width: 100%;
             max-width: 1400px;
         }
 
         @media (min-width: 768px) {
-            .dossier-grid { grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 50px; }
+            .dossier-grid { grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 60px; }
         }
 
         .dossier-folder {
             background-color: var(--folder-tan);
-            color: #000000; /* Deepest black for text on tan folder */
+            color: #000;
             padding: 30px;
             border-left: 14px solid var(--blood);
             box-shadow: 20px 25px 60px rgba(0,0,0,0.8);
@@ -155,7 +153,6 @@
             box-shadow: 0 -5px 15px rgba(0,0,0,0.4);
         }
 
-        /* Interrogation Room Input */
         .interrogation-input {
             background: rgba(0,0,0,0.98);
             border: none;
@@ -174,17 +171,10 @@
             .interrogation-input { font-size: 5rem; padding: 25px; }
         }
 
-        .interrogation-input:focus {
-            border-bottom-color: var(--gold);
-            background: #000;
-        }
+        .interrogation-input:focus { border-bottom-color: var(--gold); background: #000; }
 
-        /* Animations */
         .fade-in { animation: fadeIn 0.8s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; filter: blur(20px); transform: scale(0.9); }
-            to { opacity: 1; filter: blur(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; filter: blur(20px); transform: scale(0.95); } to { opacity: 1; filter: blur(0); } }
 
         .stamp-approve {
             color: var(--blood);
@@ -203,10 +193,14 @@
             animation: stampAnim 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        @keyframes stampAnim {
-            from { transform: scale(4) rotate(0deg); opacity: 0; }
-            to { transform: scale(1) rotate(-25deg); opacity: 0.95; }
+        @keyframes stampAnim { from { transform: scale(4) rotate(0deg); opacity: 0; } to { transform: scale(1) rotate(-25deg); opacity: 0.95; } }
+
+        .blur-intel {
+            filter: blur(18px);
+            transition: filter 0.5s ease;
+            user-select: none;
         }
+        .blur-intel.revealed { filter: blur(0); }
 
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: #000; }
@@ -234,7 +228,7 @@
         <p class="text-[10px] md:text-sm tracking-[0.8em] md:tracking-[1.5em] uppercase opacity-50 typewriter">Intelligence Bureau — Pretérito Division</p>
     </header>
 
-    <!-- Main View Switcher -->
+    <!-- Main View -->
     <div id="view-home" class="view fade-in space-y-12 md:space-y-20 text-center w-full max-w-6xl">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <button onclick="changeView('mode1')" class="btn-mafia">
@@ -251,21 +245,19 @@
             Access The Evidence Archives (Conjugations)
         </button>
 
-        <!-- Settings Console -->
         <div class="bg-black/80 border-2 border-gold/20 p-10 md:p-16 mt-12 md:mt-24 shadow-[0_0_150px_rgba(0,0,0,1)] relative">
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-noir-black px-10 border-2 border-gold/20 text-gold text-xs font-black uppercase tracking-[0.6em] whitespace-nowrap">Operations Control</div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20">
                 <div class="space-y-6">
                     <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Target Stream</label>
-                    <select id="setting-mode1-filter" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
+                    <select id="setting-mode1-filter" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold" onchange="updateSettings()">
                         <option value="story">El Escape Cubano (Mission Core)</option>
                         <option value="mixed">Mixed Assets (Everything)</option>
                     </select>
                 </div>
                 <div class="space-y-6">
                     <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Audio Speed</label>
-                    <select id="setting-voice-rate" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
+                    <select id="setting-voice-rate" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold" onchange="updateSettings()">
                         <option value="0.4">Snail (0.4x)</option>
                         <option value="0.6">Slow (0.6x)</option>
                         <option value="0.8" selected>Learner (0.8x)</option>
@@ -273,47 +265,42 @@
                     </select>
                 </div>
                 <div class="space-y-6">
-                    <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Intelligence Voice</label>
-                    <select id="setting-voice" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold cursor-pointer" onchange="updateSettings()">
-                        <option value="GOOGLE_US">🇺🇸 Google Español (Estados Unidos)</option>
+                    <label class="block text-xs uppercase tracking-widest opacity-40 typewriter">Asset Voice</label>
+                    <select id="setting-voice" class="w-full bg-black border-2 border-gold/40 text-white text-md p-5 outline-none typewriter appearance-none hover:border-gold" onchange="updateSettings()">
+                        <option value="PREMIUM_US">🇺🇸 Google US / Siri Enhanced</option>
                     </select>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Mode 1: Escucha -->
+    <!-- Mode 1 -->
     <div id="view-mode1" class="view hidden fade-in w-full max-w-7xl flex flex-col items-center">
         <div class="w-full flex justify-between items-center mb-12 md:mb-20 px-6">
             <button onclick="changeView('home')" class="text-gold cinzel-sub text-xl md:text-3xl hover:brightness-150 transition-all">← ABORT MISSION</button>
             <div id="mode1-progress" class="typewriter text-2xl md:text-4xl text-gold font-black">ASSET 1 / 10</div>
         </div>
-
         <div class="flex flex-col items-center space-y-12 md:space-y-20 flex-1 justify-center w-full">
             <button onclick="speakCurrentSentence()" class="group relative w-56 h-56 md:w-96 md:h-96 rounded-full border-[10px] md:border-[16px] border-double border-gold/30 bg-black/70 flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-500 shadow-[0_0_200px_rgba(212,175,55,0.2)]">
                 <svg width="100" height="100" fill="var(--gold)" viewBox="0 0 256 256" class="md:w-[150px] md:h-[150px] group-hover:fill-white transition-colors"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm36.44,110.83-40,24A8,8,0,0,1,112,152V104a8,8,0,0,1,12.44-6.67l40,24a8,8,0,0,1,0,13.34Z"></path></svg>
             </button>
-
             <div class="text-center space-y-12 min-h-[250px] md:min-h-[400px] w-full px-6">
                 <p id="mode1-es" class="text-4xl md:text-8xl italic font-serif text-white leading-tight hidden drop-shadow-[0_8px_20px_rgba(0,0,0,1)]"></p>
-                <!-- english_translation is strictly handled via hidden class and text wipe to prevent leaks -->
                 <div id="mode1-en" class="text-2xl md:text-5xl typewriter gold-metal hidden opacity-0 transition-opacity duration-1000 bg-black/70 p-8 md:p-14 inline-block border-2 border-gold/10"></div>
             </div>
         </div>
-
         <div class="grid grid-cols-2 gap-10 md:gap-20 w-full max-w-4xl mt-16 md:mt-24 pb-32">
             <button id="btn-reveal" onclick="revealMode1()" class="py-6 md:py-10 border-4 border-gold/30 text-gold text-2xl md:text-4xl cinzel font-black hover:bg-gold/10 hover:border-gold">DECIPHER</button>
             <button onclick="nextMode1()" class="btn-mafia text-2xl md:text-4xl">CONTINUE</button>
         </div>
     </div>
 
-    <!-- Mode 2: Verbos -->
+    <!-- Mode 2 -->
     <div id="view-mode2" class="view hidden fade-in w-full max-w-6xl flex flex-col items-center">
         <div class="w-full flex justify-between items-center mb-12 px-6">
             <button onclick="changeView('home')" class="text-gold cinzel-sub text-xl md:text-3xl hover:brightness-150 transition-all">← END INTERROGATION</button>
             <div id="mode2-progress" class="typewriter text-2xl md:text-4xl text-gold font-black">SUBJECT 1 / 15</div>
         </div>
-
         <div class="w-full flex-1 flex flex-col items-center justify-center space-y-20 md:space-y-32">
             <div class="text-center relative">
                 <div class="absolute -top-60 left-1/2 -translate-x-1/2 w-[8px] h-80 bg-white/10 opacity-40 shadow-[0_0_100px_rgba(255,255,255,0.4)]"></div>
@@ -321,17 +308,15 @@
                 <h2 id="mode2-target" class="text-7xl md:text-[14rem] font-black gold-metal tracking-tighter leading-none"></h2>
                 <p id="mode2-context" class="typewriter text-lg md:text-3xl italic opacity-30 mt-12 md:mt-20 px-10 md:px-40 leading-relaxed font-serif"></p>
             </div>
-
             <div class="w-full flex flex-col items-center space-y-12 md:space-y-20 px-8">
                 <input type="text" id="mode2-input" autocomplete="off" class="interrogation-input" placeholder="Submit Statement...">
                 <div id="mode2-feedback" class="h-20 md:h-32 flex items-center justify-center"></div>
             </div>
         </div>
-
         <button id="btn-submit-mode2" onclick="checkMode2()" class="w-full max-w-3xl py-8 md:py-12 btn-mafia text-2xl md:text-5xl font-black mt-20 md:mt-32 mb-32">CONFIRM INTEL</button>
     </div>
 
-    <!-- Mode 3: Archives -->
+    <!-- Mode 3 -->
     <div id="view-mode3" class="view hidden fade-in w-full flex flex-col items-center px-6">
         <div class="w-full flex justify-between items-center mb-16 md:mb-24 max-w-7xl">
             <button onclick="changeView('home')" class="text-gold cinzel-sub text-2xl md:text-4xl hover:brightness-150 transition-all">← CLOSE ARCHIVES</button>
@@ -346,38 +331,40 @@
         <div class="dossier-folder p-12 md:p-24 text-center space-y-12 md:space-y-20 w-full border-t-[12px] md:border-t-[20px] border-blood/80">
             <div class="dossier-tab">OPERATIONAL DEBRIEF</div>
             <h2 class="text-4xl md:text-8xl font-black cinzel tracking-tighter border-b-8 border-black/20 pb-8 md:pb-12 uppercase">Status Report</h2>
-            
             <div class="py-10 md:py-16">
                 <p id="summary-score" class="text-8xl md:text-[14rem] font-black text-red-950 drop-shadow-2xl font-serif leading-none"></p>
-                <p class="typewriter text-sm md:text-xl font-black uppercase tracking-[1em] mt-10 md:mt-16 opacity-80 underline">Accuracy Level Verified</p>
+                <p class="typewriter text-sm md:text-xl font-black uppercase tracking-[1em] mt-10 md:mt-16 opacity-80 underline">Accuracy Verified</p>
             </div>
-
             <div id="missed-container" class="text-left hidden border-t-8 border-black/10 pt-16">
                 <h3 class="typewriter text-xs md:text-lg font-black uppercase mb-12 text-red-950 underline decoration-8">Identified Data Leaks:</h3>
                 <div id="missed-list" class="grid grid-cols-1 md:grid-cols-2 gap-x-12 md:gap-x-24 gap-y-6 md:gap-y-10 text-xl md:text-3xl typewriter italic"></div>
             </div>
-
             <button onclick="changeView('home')" class="w-full py-8 md:py-12 btn-mafia text-2xl md:text-4xl mt-12 md:mt-24">RETURN TO BASE</button>
         </div>
     </div>
 
-    <!-- Footer Decor -->
     <footer class="mt-32 opacity-10 text-center pb-32 pointer-events-none w-full safe-pb">
         <p class="typewriter text-[12px] md:text-[16px] uppercase tracking-[1em] md:tracking-[2em]">Proprietà della Famiglia Corleone — Micah</p>
     </footer>
 </div>
 
 <script>
-    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-desktop-v5';
+    const APP_ID = typeof __app_id !== 'undefined' ? __app_id : 'el-padrino-ultimate-v1';
 
-    // Content Bank
+    const VERB_DEFS = {
+        "vivir": "to live", "agarrar": "to grab", "vomitar": "to vomit", "atacar": "to attack", "viajar": "to travel", 
+        "comprar": "to buy", "llegar": "to arrive", "regresar": "to return", "ducharse": "to shower", 
+        "levantarse": "to get up", "moverse": "to move", "ser": "to be", "ir": "to go", "ver": "to see", 
+        "hacer": "to make / do", "tener": "to have"
+    };
+
     const MODE1_DATA = [
         {es: "Miguel vivió en Cuba muchos años.", en: "Miguel lived in Cuba for many years.", story: true},
         {es: "Yo viví en la playa el verano pasado.", en: "I lived at the beach last summer.", story: false},
         {es: "Don Vito vivió en Sicilia con su familia.", en: "Don Vito lived in Sicily with his family.", story: false},
         {es: "El padre agarró el brazo de su hermano.", en: "The father grabbed his brother's arm.", story: true},
-        {es: "Yo agarré la manzana inmediatamente.", en: "I grabbed the apple immediately.", story: false},
         {es: "Ella agarró la balsa antes del ataque.", en: "She grabbed the raft before the attack.", story: true},
+        {es: "Yo agarré la manzana.", en: "I grabbed the apple.", story: false},
         {es: "Fabio vomitó cuando la balsa se movió.", en: "Fabio vomited when the raft moved.", story: true},
         {es: "El chico vomitó después de la cena.", en: "The boy vomited after dinner.", story: false},
         {es: "El tiburón atacó la balsa.", en: "The shark attacked the raft.", story: true},
@@ -386,7 +373,7 @@
         {es: "La familia compró un neumático.", en: "The family bought a tire.", story: true},
         {es: "El tiburón llegó a la balsa.", en: "The shark arrived at the raft.", story: true},
         {es: "La familia llegó a Florida.", en: "The family arrived in Florida.", story: true},
-        {es: "Rita regresó a Cuba en the barco.", en: "Rita returned to Cuba on the boat.", story: true},
+        {es: "Rita regresó a Cuba en el barco.", en: "Rita returned to Cuba on the boat.", story: true},
         {es: "La familia se levantó para escapar.", en: "The family got up to escape.", story: true},
         {es: "La balsa se movió en el agua.", en: "The raft moved in the water.", story: true},
         {es: "El viaje fue un problema grande.", en: "The trip was a big problem.", story: true},
@@ -426,7 +413,7 @@
 
     let state = {
         currentView: 'home',
-        settings: { mode1Filter: 'story', voiceName: 'GOOGLE_US', voiceRate: 0.8 },
+        settings: { mode1Filter: 'story', voiceName: 'PREMIUM_US', voiceRate: 0.8 },
         mode1: { queue: [], index: 0 },
         mode2: { queue: [], index: 0, score: 0, missed: [] },
         voices: []
@@ -443,14 +430,11 @@
         const populate = () => {
             state.voices = window.speechSynthesis.getVoices();
             const select = document.getElementById('setting-voice');
-            const targetName = "Google español de Estados Unidos";
+            const targetNames = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica", "Jorge", "Luciana"];
             const spanish = state.voices.filter(v => v.lang.toLowerCase().startsWith('es'));
             
-            // Prefer the specific requested name
-            let bestVoice = spanish.find(v => v.name === targetName);
-            if (!bestVoice) bestVoice = spanish.find(v => v.lang.includes('US') || v.name.includes('US'));
-
-            select.innerHTML = bestVoice ? `<option value="GOOGLE_US">🇺🇸 Google US (Priority)</option>` : '<option value="">System Default</option>';
+            let best = spanish.find(v => targetNames.some(t => v.name.includes(t)));
+            select.innerHTML = best ? `<option value="PREMIUM_US">🇺🇸 Premium Intellectual (Priority)</option>` : '<option value="">System Default</option>';
             
             spanish.forEach(v => {
                 const opt = document.createElement('option');
@@ -490,20 +474,16 @@
         }
     }
 
-    function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
-
     function speak(text) {
         const msg = new SpeechSynthesisUtterance(text);
         msg.lang = 'es-MX';
         msg.rate = state.settings.voiceRate || 0.8;
-        
         const vs = state.settings.voiceName;
-        if (vs === "GOOGLE_US" || !vs) {
-            const target = state.voices.find(v => v.name === "Google español de Estados Unidos") || 
-                           state.voices.find(v => v.lang.includes('US') || v.name.includes('US')) ||
-                           state.voices.find(v => v.lang.startsWith('es'));
+        if (vs === "PREMIUM_US" || !vs) {
+            const targets = ["Google español de Estados Unidos", "Paulina", "Siri", "Monica"];
+            const target = state.voices.find(v => targets.some(t => v.name.includes(t))) || state.voices.find(v => v.lang.startsWith('es'));
             if (target) msg.voice = target;
-        } else if (vs) {
+        } else {
             const v = state.voices.find(v => v.name === vs);
             if (v) msg.voice = v;
         }
@@ -515,45 +495,39 @@
     function startMode1() {
         const f = state.settings.mode1Filter;
         let pool = f === 'story' ? MODE1_DATA.filter(d => d.story) : MODE1_DATA;
-        state.mode1.queue = shuffle([...pool]).slice(0, 10);
+        state.mode1.queue = pool.sort(() => Math.random() - 0.5).slice(0, 10);
         state.mode1.index = 0;
         showMode1();
     }
 
     function showMode1() {
         const item = state.mode1.queue[state.mode1.index];
-        const esEl = document.getElementById('mode1-es');
         const enEl = document.getElementById('mode1-en');
+        const esEl = document.getElementById('mode1-es');
         
-        // HARD RESET: physical hidden and text wipe to prevent leaks
+        // PHYSICAL WIPE to prevent premature reveal
+        enEl.textContent = "";
         enEl.classList.add('hidden');
         enEl.classList.add('opacity-0');
-        enEl.textContent = ""; 
         
         esEl.textContent = item.es;
         esEl.classList.add('hidden');
         
         document.getElementById('mode1-progress').textContent = `ASSET ${state.mode1.index + 1} / 10`;
         document.getElementById('btn-reveal').classList.remove('hidden');
-        
         setTimeout(() => speak(item.es), 600);
     }
 
     function revealMode1() {
         const item = state.mode1.queue[state.mode1.index];
-        const esEl = document.getElementById('mode1-es');
         const enEl = document.getElementById('mode1-en');
+        const esEl = document.getElementById('mode1-es');
         
         enEl.textContent = item.en;
         enEl.classList.remove('hidden');
         esEl.classList.remove('hidden');
         
-        // Delay visual transition so it doesn't flicker
-        setTimeout(() => {
-            enEl.style.transition = 'opacity 1s';
-            enEl.classList.remove('opacity-0');
-        }, 10);
-
+        setTimeout(() => enEl.classList.remove('opacity-0'), 50);
         document.getElementById('btn-reveal').classList.add('hidden');
     }
 
@@ -566,7 +540,7 @@
 
     // MODE 2
     function startMode2() {
-        state.mode2.queue = shuffle([...MODE2_DATA]).slice(0, 15);
+        state.mode2.queue = MODE2_DATA.sort(() => Math.random() - 0.5).slice(0, 15);
         state.mode2.index = 0; state.mode2.score = 0; state.mode2.missed = [];
         showMode2();
     }
@@ -575,7 +549,7 @@
         const item = state.mode2.queue[state.mode2.index];
         document.getElementById('mode2-progress').textContent = `SUBJECT ${state.mode2.index + 1} / 15`;
         document.getElementById('mode2-target').textContent = item.es;
-        document.getElementById('mode2-context').textContent = item.context || "Interrogate the verb interpretation.";
+        document.getElementById('mode2-context').textContent = item.context || "No context found. Extract the interpretation.";
         document.getElementById('mode2-input').value = "";
         document.getElementById('mode2-feedback').innerHTML = "";
         document.getElementById('mode2-input').focus();
@@ -614,17 +588,18 @@
         Object.keys(MODE3_DATA).forEach((verb, idx) => {
             const card = document.createElement('div');
             card.className = 'dossier-folder';
+            const meaning = VERB_DEFS[verb] || "REDACTED";
             card.innerHTML = `
-                <div class="dossier-tab">RECORDS FILE #${7000+idx}</div>
-                <div class="border-b-8 border-black/20 pb-4 mb-10 flex justify-between items-end">
+                <div class="dossier-tab">ASSET FILE #${8000+idx}</div>
+                <div class="border-b-8 border-black/20 pb-4 mb-8 flex justify-between items-end">
                     <span class="text-4xl md:text-6xl font-black cinzel tracking-tighter uppercase">${verb}</span>
-                    <span class="typewriter text-[10px] md:text-sm opacity-60">Pretérito Dossier</span>
+                    <button onclick="revealDef(this, '${meaning}')" class="typewriter text-xs font-black border-2 border-black px-4 py-1 hover:bg-black hover:text-tan transition-colors">REVEAL DEFINITION</button>
                 </div>
                 <div class="grid grid-cols-1 gap-6">
                     ${["yo", "tú", "él / ella / ud.", "nosotros", "ellos / ellas / uds."].map((p, i) => `
-                        <div class="flex justify-between items-center bg-black/5 p-6 border-b-2 border-black/20 hover:bg-black/10 transition-colors">
+                        <div onclick="toggleBlur(this)" class="flex justify-between items-center bg-black/5 p-6 border-b-2 border-black/20 hover:bg-black/10 transition-colors cursor-pointer group">
                             <div class="typewriter text-sm md:text-xl font-black opacity-100 uppercase tracking-tighter">${p}</div>
-                            <div class="text-2xl md:text-4xl font-black blur-[18px] hover:blur-none transition-all duration-700 cursor-help select-none" title="Reveal Intel">
+                            <div class="text-2xl md:text-4xl font-black blur-intel">
                                 ${MODE3_DATA[verb][i]}
                             </div>
                         </div>
@@ -633,6 +608,16 @@
             `;
             list.appendChild(card);
         });
+    }
+
+    function revealDef(btn, text) {
+        btn.textContent = text.toUpperCase();
+        btn.classList.add('bg-blood', 'text-white', 'border-blood');
+    }
+
+    function toggleBlur(el) {
+        const text = el.querySelector('.blur-intel');
+        text.classList.toggle('revealed');
     }
 
     function showSummary(score, total, missed) {
